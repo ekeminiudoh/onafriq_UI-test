@@ -13,7 +13,7 @@ import utils.logs.Log;
 import static utils.extentReports.ExtentTestManager.getTest;
 
 public class TestListener extends TestBase implements ITestListener {
-    Log logger = new Log();
+
 
     private static String getTestMethodName(ITestResult iTestResult) {
         return iTestResult.getMethod().getConstructorOrMethod().getName();
@@ -57,7 +57,7 @@ public class TestListener extends TestBase implements ITestListener {
 
     @Override
     public void onTestFailedButWithinSuccessPercentage(ITestResult result) {
-        // TODO Auto-generated method stub
+
 
     }
 

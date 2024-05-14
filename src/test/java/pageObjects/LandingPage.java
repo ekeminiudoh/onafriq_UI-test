@@ -21,33 +21,25 @@ public class LandingPage extends PageBase {
 
     }
 
-    // Elements and methods to perform actions
+    // Elements and method to perform actions
 
     @FindBy(xpath = "//*[@id=\"header\"]/div/div/div/div[2]/div/ul/li[4]/a")
     WebElement signup_login_button;
 
-    public void clickLogin() {
-        click(signup_login_button);
-    }
-
     @FindBy(xpath = "//*[@id=\"form\"]/div/div/div[1]/div/form/input[2]")
     WebElement emailAddress_field;
-
-    public void enterUsername(String username) {
-        enterText(emailAddress_field, username);
-    }
 
     @FindBy(xpath = "//*[@id=\"form\"]/div/div/div[1]/div/form/input[3]")
     WebElement password_field;
 
-    public void enterPassword(String password) {
-        enterText(password_field, password);
-    }
-
     @FindBy(xpath = "//*[@id=\"form\"]/div/div/div[1]/div/form/button")
     WebElement login_button;
 
-    public void clickLoginButton() {
+
+    public void userSignIn(String username, String password) {
+        click(signup_login_button);
+        enterText(emailAddress_field, username);
+        enterText(password_field, password);
         click(login_button);
     }
 }

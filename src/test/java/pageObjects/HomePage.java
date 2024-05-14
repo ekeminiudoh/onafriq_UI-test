@@ -7,8 +7,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class HomePage extends PageBase {
 
@@ -29,34 +28,28 @@ public class HomePage extends PageBase {
     List<WebElement> featuredItems;
 
     @FindBy(xpath = "//div[@class='features_items']")
-    WebElement featuresItems;
+    WebElement featuresItem;
 
     public void getLabelAndPriceOfFeaturedItems(){
-        scrollIntoViewWithJavaScript(featuresItems);
-        List<String> itemNames = new ArrayList<>();
-        List<Double> itemPrices = new ArrayList<>();
-        for(WebElement item : featuredItems) {
-            String label = item.findElement(By.tagName("p")).getText();
+        scrollIntoViewWithJavaScript(featuresItem);
+
+        List<Map<String, Object>> itemList = new ArrayList<>();
+        for(WebElement item : featuredItems){
+            String name =item.findElement(By.tagName("p")).getText();
             String priceText = item.findElement(By.tagName("h2")).getText().replace("Rs.","");
             double price = Double.parseDouble(priceText);
+            Map<String, Object> itemInfo = new HashMap<>();
+            itemInfo.put("ItemName", name);
+            itemInfo.put("ItemPrice", price);
+            itemList.add(itemInfo);
+        }
 
-            itemNames.add(label);
-            itemPrices.add(price);
-
-            List<String> combined = new ArrayList<>();
-            for (int i = 0; i< itemNames.size(); i++) {
-                combined.add(itemNames.get(i) +" "+ "Rs" +" "+ itemPrices.get(i));
-            }
-
-            combined.sort((item1, item2) -> {
-                double price1 = Double.parseDouble(item1.substring(item1.lastIndexOf("RS.") + 1));
-                double price2 = Double.parseDouble(item2.substring(item2.lastIndexOf("RS.") + 1));
-                return Double.compare(price1, price2);
-            });
-            System.out.println("Sorted Featured Items (Low to High):");
-            combined.forEach(System.out::println);
+        itemList.sort(Comparator.comparingDouble(m -> (double) m.get("ItemPrice")));
+        for (Map<String, Object> itemInfo : itemList) {
+            System.out.println("Item Name: " + itemInfo.get("ItemName"));
+            System.out.println("Item Price: " + itemInfo.get("ItemPrice"));
+            System.out.println();
         }
     }
-
 
 }

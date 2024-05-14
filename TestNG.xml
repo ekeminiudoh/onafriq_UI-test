@@ -14,7 +14,7 @@
     <test name="TC_001_User can launch Url and login">
         <parameter name="browser" value="chrome"/>
         <classes>
-            <class name="testcase.testLanding" />
+            <class name="testcase.E2E_SignIn_Browse_Checkout_Test" />
         </classes>
     </test>
 

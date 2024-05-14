@@ -17,7 +17,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.log4testng.Logger;
 
@@ -31,11 +33,9 @@ public class TestBase {
     public static ReadConfig readConfig = new ReadConfig();
     public static String baseUrl = readConfig.setApplicationURL();
     public static String browser = readConfig.getbrowser();
-    public Duration WAIT = ofSeconds(120);
     public static WebDriver driver;
     public static Logger logger;
     public static JavascriptExecutor jsExecutor;
-    private static final int IMPLICIT_WAIT_TIMEOUT_SECONDS = 45;
     private static final int EXPLICIT_WAIT_TIMEOUT_SECONDS = 20;
     public WebDriverWait wait;
 
@@ -97,76 +97,21 @@ public class TestBase {
 
 
 
-    @BeforeMethod
+    @BeforeClass
     public void setUp() {
         initializeWebDriver(browser);
 //        configureLogger();
         driver.get(baseUrl);
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(ofSeconds(80));
+        driver.manage().timeouts().implicitlyWait(ofSeconds(40));
         wait = new WebDriverWait(driver, ofSeconds(EXPLICIT_WAIT_TIMEOUT_SECONDS));
         jsExecutor = (JavascriptExecutor) driver;
-
-//        switch (browser.toLowerCase()) {
-//            case "chrome" -> setupChromeDriver();
-//            case "edge" -> setupEdgeDriver();
-//            case "firefox" -> setupFirefoxDriver();
-//            default -> throw new IllegalStateException("Invalid browser specified: " + browser);
-//        }
-
     }
 
-    @AfterMethod
+    @AfterClass
     public void tearDown() {
         if (driver != null) {
             driver.quit();
         }
-    }
-
-
-//    @BeforeClass
-//    public void setUp() {
-//        initializeWebDriver(browser);
-//        configureLogger();
-//        driver.get(baseUrl);
-//        driver.manage().window().maximize();
-//        driver.manage().timeouts().implicitlyWait(ofSeconds(80));
-//        wait = new WebDriverWait(driver, Duration.ofSeconds(EXPLICIT_WAIT_TIMEOUT_SECONDS));
-//        jsExecutor = (JavascriptExecutor) driver;
-//    }
-//
-//    @AfterClass
-//    public void tearDown() {
-//        if (driver != null) {
-//            driver.quit();
-//        }
-//    }
-
-    private void setupChromeDriver() {
-        ChromeOptions options = new ChromeOptions();
-        options.setAcceptInsecureCerts(true);
-        options.addArguments("--remote-allow-origins=*");
-
-        WebDriverManager.chromedriver().setup();
-        driver = new ChromeDriver(options);
-    }
-
-    private void setupEdgeDriver() {
-        EdgeOptions options = new EdgeOptions();
-        options.setAcceptInsecureCerts(true);
-        options.addArguments("--remote-allow-origins=*");
-
-        WebDriverManager.edgedriver().setup();
-        driver = new EdgeDriver(options);
-    }
-
-    private void setupFirefoxDriver() {
-        FirefoxOptions options = new FirefoxOptions();
-        options.setAcceptInsecureCerts(true);
-        options.addArguments("--remote-allow-origins=*");
-
-        WebDriverManager.firefoxdriver().setup();
-        System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir") + "\\Drivers\\geckodriver.exe");
-        driver = new FirefoxDriver(options);
     }
 }

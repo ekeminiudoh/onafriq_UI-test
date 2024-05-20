@@ -2,17 +2,13 @@
 <suite name="UI Test Automation">
     <listeners>
         <listener
-                class-name="utils.listeners.TestListener">
-
-        </listener>
-        <listener
-                class-name="utils.listeners.AnnotationTransformer">
-
+            class-name="utils.listeners.AnnotationTransformer">
+            class-name="utils.listeners.TestListener">
         </listener>
     </listeners>
 
     <test name="TC_001_User can launch Url and login">
-        <parameter name="browser" value="chrome"/>
+<!--        <parameter name="browser" value="chrome"/>-->
         <classes>
             <class name="testcase.E2E_SignIn_Browse_Checkout_Test" />
         </classes>

@@ -79,6 +79,4 @@ public class E2E_SignIn_Browse_Checkout_Test extends TestBase {
                 (paymentPage.orderConfirmationMessage("Congratulations! Your order has been confirmed!"));
 
     }
-
-
 }

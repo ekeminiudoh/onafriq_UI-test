@@ -39,15 +39,6 @@ public class TestBase {
     private static final int EXPLICIT_WAIT_TIMEOUT_SECONDS = 20;
     public WebDriverWait wait;
 
-
-
-//    private void configureLogger() {
-//        logger = Logger.getLogger("DebuggingLog");
-//        PropertyConfigurator.configure("log4j.properties");
-//        logger.setLevel(Level.DEBUG);
-//        logger.debug("Debug logging has started");
-//    }
-
     public WebDriver getDriver() {
         return driver;
     }
@@ -95,12 +86,9 @@ public class TestBase {
         }
     }
 
-
-
     @BeforeClass
     public void setUp() {
         initializeWebDriver(browser);
-//        configureLogger();
         driver.get(baseUrl);
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(ofSeconds(40));
